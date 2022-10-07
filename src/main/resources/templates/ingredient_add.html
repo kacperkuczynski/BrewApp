@@ -1,0 +1,154 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dodaj skłdanik</title>
+    <!-- CSS only -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+
+
+</head>
+<body>
+<div class="container ">
+    <div class="row justify-content-center">
+        <div class="center text-center">
+            <h2>Receptura</h2>
+            <hr/>
+            <table class="table table-bordered table-striped table-responsive">
+                <thead >
+                <tr>
+                    <th style="width: auto; height: auto; text-align: center">Numer receptury</th>
+                    <th style="width: auto; height: auto; text-align: center">Nazwa receptury</th>
+                    <th style="width: auto; height: auto; text-align: center">Typ piwa</th>
+                    <th style="width: auto; height: auto; text-align: center">Data utworzenia</th>
+                    <th style="width: auto; height: auto; text-align: center">Objętość [Litry]</th>
+                    <th style="width: auto; height: auto; text-align: center">Ekstrakt [Plato]</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="recipe: ${recipe}" style="width: auto; height: auto; text-align: center">
+                    <td th:text="${recipe.numRec}"></td>
+                    <td th:text="${recipe.nameRec}"></td>
+                    <td th:text="${recipe.type}"></td>
+                    <td th:text="${recipe.created}"></td>
+                    <td th:text="${recipe.resultAmount}"></td>
+                    <td th:text="${recipe.resultExtract}"></td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <h2>Dodaj skłdanik</h2>
+    <hr/>
+    <form th:id="form" th:object="${newIngredient}" method="POST">
+        <div class="form-group row">
+            <label for="type" class="col-sm-2 col-form-label">Rodzaj surowca</label>
+            <div class="col-sm-1 mb-1">
+                <select class="form-control" id="one" style="width:auto; height:auto" ></select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="type" class="col-sm-2 col-form-label">Nazwa surowca</label>
+            <div class="col-sm-1 mb-1">
+                <select class="form-control" id="two" style="width:auto; height:auto" ></select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="type" class="col-sm-2 col-form-label">Ilosc surowca</label>
+            <div class="col-sm-1 mb-1">
+                <input class="form-control" type="number" th:field="*{amount}" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="type" class="col-sm-2 col-form-label">Jednostka miary</label>
+            <div class="col-sm-1 mb-1">
+                <select class="form-control" id="three" style="width:auto; height:auto" ></select>
+            </div>
+        </div>
+
+        <br/> <button class="btn btn-primary" type="submit">Zapisz składnik</button>
+
+    </form>
+
+<!--    th:action="@{/saveIngredient/__${recipeId}__/__${rawId}__}"-->
+
+    <hr/>
+    <a th:href="@{/detailRecipe/__${recipeId}__}" class="btn">Wróć do receptury</a>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script th:inline="javascript">
+    function one(){
+    var raws = /*[[${listRaw}]]*/;
+//get type distinct
+
+var resultType = raws.reduce(function(memo, e1){
+  var matches = memo.filter(function(e2){
+    return e1.type == e2.type
+  })
+  if (matches.length == 0)
+    memo.push(e1)
+    return memo;
+}, [])
+
+    var s = '';
+        for(var j = 0; j < 1; j++) {
+        s += '<option value="wybierz" selected>Wybierz </option>';
+            for(var i = 0; i < resultType.length; i++) {
+                s += '<option th:value="' + resultType[i].id + '">' + resultType[i].type + '</option>';
+    }}
+$('#one').html(s);
+
+    // change name
+    $('#one').change(function(){
+    var getType = $(this).find(':selected').text();
+        const foundNames = raws.filter(v => v.type === getType);
+        var n = '';
+        for(var j = 0; j < 1; j++) {
+        n += '<option value="wybierz" selected>Wybierz </option>';
+                for(var i = 0; i < foundNames.length; i++) {
+                n += '<option th:value="' + foundNames[i].id + '">' + foundNames[i].name + '</option>';
+        }}
+        $('#two').html(n);
+    });
+        // change unit
+    $('#two').change(function(){
+    var getName = $(this).find(':selected').text();
+        const foundUnit = raws.filter(v => v.name === getName);
+        var u = '';
+        for(var j = 0; j < 1; j++) {
+        u += '<option value="wybierz" selected>Wybierz </option>';
+            for(var i = 0; i < foundUnit.length; i++) {
+            u += '<option th:value="' + foundUnit[i].id + '">' + foundUnit[i].unitMeasure + '</option>';
+    }}
+        $('#three').html(u);
+
+    });
+
+    $('#three').change(function(){
+
+        var getName = $("#two").find(':selected').text();
+
+        var jeden = raws.find((n) => {return n["name"] === getName});
+        var id = ($(jeden).attr('id'));
+
+        var rawId = document.location.href+"/"+id;
+
+        $('form').get(0).setAttribute('action', rawId);
+
+
+    });
+    }
+  one();
+
+</script>
+
+</body>
+</html>
+

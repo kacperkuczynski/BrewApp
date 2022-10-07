@@ -1,0 +1,71 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Popraw produkt</title>
+    <!-- CSS only -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container ">
+    <div class="row justify-content-center">
+        <div class="center text-center">
+            <h2>Receptura</h2>
+            <hr/>
+            <table class="table table-bordered table-striped table-responsive">
+                <thead >
+                <tr>
+                    <th style="width: auto; height: auto; text-align: center">Numer receptury</th>
+                    <th style="width: auto; height: auto; text-align: center">Nazwa receptury</th>
+                    <th style="width: auto; height: auto; text-align: center">Typ piwa</th>
+                    <th style="width: auto; height: auto; text-align: center">Data utworzenia</th>
+                    <th style="width: auto; height: auto; text-align: center">Objętość [Litry]</th>
+                    <th style="width: auto; height: auto; text-align: center">Ekstrakt [Plato]</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="recipe: ${recipe}" style="width: auto; height: auto; text-align: center">
+                    <td th:text="${recipe.numRec}"></td>
+                    <td th:text="${recipe.nameRec}"></td>
+                    <td th:text="${recipe.type}"></td>
+                    <td th:text="${recipe.created}"></td>
+                    <td th:text="${recipe.resultAmount}"></td>
+                    <td th:text="${recipe.resultExtract}"></td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <h2>Popraw produkt</h2>
+    <hr/>
+    <form  th:action="@{/updateProduct/__${id}__/__${recipeId}__}" th:object="${product}" method="POST">
+
+        <div class="form-group row">
+            <label for="type" class="col-sm-2 col-form-label">Data wytworzenia</label>
+            <div class="col-sm-1 mb-1">
+                <input type="date" th:field="*{executed}"/>
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <label for="type" class="col-sm-2 col-form-label">Ilość produktu [Litry]</label>
+            <div class="col-sm-1 mb-1">
+                <input type="number" th:field="*{made}"/>
+            </div>
+        </div>
+
+
+        <button class="btn btn-primary" type="submit">Popraw produkt</button>
+
+    </form>
+    <hr/>
+</div>
+
+<a th:href="@{/product_list}" class="btn">Wróć do listy produktów</a>
+</body>
+</html>

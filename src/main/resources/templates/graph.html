@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+    <!-- Optional theme -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+<!--create navigation bar (header)-->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <!--                <span class="icon-bar"></span>-->
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">Browar Złota Woda</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/raws}">Surowce</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/recipes}">Receptury</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/product_list}">Wytworzone produkty</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/getGraph}">Dane produkcji</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="center text-center">
+            <h2>Wykres produkcji w zależności od dnia [Litry]</h2>
+<div style="width: 700px; height: 600px; margin:auto">
+    <canvas id="myChart1" ></canvas>
+    <div class="container">
+
+
+    <div class="input-group date">
+    <input onchange="filterData1()" class="form-control" type="date" id="startdate1" value="2022-09-05"/>
+        <div class="input-group-append">
+            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+        </div>
+        <input onchange="filterData1()" class="form-control" type="date" id="enddate1" value="2022-10-03"/>
+
+        <div class="input-group-append">
+            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+        </div>
+    </div>
+    </div>
+
+</div>
+            <h2>Wykres produkcji całkowitej [Litry]</h2>
+<div style="width: 500px; height: 500px; margin: 0 auto">
+    <canvas id="myChart2" ></canvas>
+</div>
+</div>
+</div>
+</div>
+
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<hr/>
+
+<script th:inline="javascript">
+    var dateMade = [[${dateMade}]];
+    var made1 = [[${made1}]];
+    var made2 = [[${made2}]];
+    var made3 = [[${made3}]];
+    var made4 = [[${made4}]];
+    var message = [[${type}]];
+        const ctx1 = document.getElementById('myChart1').getContext('2d');
+        const myChart1 = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: dateMade,
+        datasets: [{
+                label: 'Jasne',
+        data: made1,
+        backgroundColor: [
+        'rgb(229,149,1, 0.8)'
+        ],
+        borderWidth: 1
+    }
+    ,{
+            label: 'Pszeniczne',
+            data: made2,
+            backgroundColor: [
+                'rgb(1,152,21, 0.8)'
+            ],
+            borderWidth: 1
+        }
+            ,{
+                label: 'Ciemne',
+                data: made3,
+                backgroundColor: [
+                    'rgb(66,3,3, 0.8)'
+                ],
+                borderWidth: 1
+            }
+            ,{
+                label: 'Summer Ale',
+                data: made4,
+                backgroundColor: [
+                    'rgb(227,0,19, 0.8)'
+                ],
+                borderWidth: 1
+            }]
+    },
+            options: {
+            scales: {
+            y  : {
+            beginAtZero: true,
+    }
+    }
+    }
+    });
+        function filterData1(){
+            const dateMade2 = [...dateMade];
+            const startdate = document.getElementById('startdate1');
+            const enddate = document.getElementById('enddate1');
+            const indexstartdate = dateMade2.indexOf(startdate.value);
+            const indexenddate = dateMade2.indexOf(enddate.value);
+            const filterDate = dateMade2.slice(indexstartdate, indexenddate + 1);
+            myChart1.data.labels = filterDate;
+            myChart1.update();
+        }
+    var type = [[${type}]];
+    var amount = [[${amount}]];
+
+    const ctx2 = document.getElementById('myChart2').getContext('2d');
+    const myChart2 = new Chart(ctx2, {
+        type: 'pie',
+        data: {
+            labels: type,
+            datasets: [{
+                data: amount,
+                backgroundColor: [
+                    'rgba(66,3,3, 0.5)',
+                    'rgba(229,149,1, 0.5)',
+                    'rgba(1,152,21, 0.5)',
+                    'rgba(227,0,19,0.5)'
+                ],
+                borderWidth: 1
+            }]
+        }
+    });
+
+
+
+
+
+</script>
+
+<script>
+    $('.input-group.date').datepicker({
+        autoclose: true,
+        todayHighlight: true
+    });
+</script>
+</body>
+</html>

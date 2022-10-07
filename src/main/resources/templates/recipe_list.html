@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Lista receptur</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+</head>
+<body>
+<!--create navigation bar (header)-->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">Browar Złota Woda</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/raws}">Surowce</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/recipes}">Receptury</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/product_list}">Wytworzone produkty</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/getGraph}">Dane produkcji</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br>
+<br>
+<br>
+<div class="container ">
+    <div class="row justify-content-center">
+        <div class="center text-center">
+    <h2>Lista receptur</h2>
+            <hr/>
+
+            <a th:href="@{/addRecipe}" class="btn btn-primary mb-2">Dodaj recepturę</a>
+
+            <table class="table table-bordered table-striped" id="recipe-Table">
+        <thead>
+        <tr style="width: auto; height: auto; text-align: center">
+            <th style="width: auto; height: auto; text-align: center">Numer receptury</th>
+            <th style="width: auto; height: auto; text-align: center">Nazwa receptury</th>
+            <th style="width: auto; height: auto; text-align: center">Typ piwa</th>
+            <th style="width: auto; height: auto; text-align: center">Data utworzenia</th>
+            <th style="width: auto; height: auto; text-align: center">Objętość [Litry]</th>
+            <th style="width: auto; height: auto; text-align: center">Ekstrakt [Plato]</th>
+            <th style="width: auto; height: auto; text-align: center">Działanie</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--/*@thymesVar id="recipe" type="com.example.BrewApp_1.Recipe.Recipe"*/-->
+        <tr th:each="recipe: ${recipe}" style="width: auto; height: auto; text-align: center">
+            <td th:text="${recipe.numRec}"></td>
+            <td th:text="${recipe.nameRec}"></td>
+            <td th:text="${recipe.type}"></td>
+            <td th:text="${recipe.created}"></td>
+            <td th:text="${recipe.resultAmount}"></td>
+            <td th:text="${recipe.resultExtract}"></td>
+            <td>
+                <a th:href="@{/detailRecipe/__${recipe.id}__}" class="btn btn-info">Szczegóły Receptury</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.12.1/datatables.min.js"></script>
+<script>
+        $(document).ready(function(){
+            $("#recipe-Table").DataTable();
+        })
+</script>
+
+<hr/>
+<a th:href="@{/recipes}" class="btn">Wróć do strony głównej</a>
+</body>
+</html>

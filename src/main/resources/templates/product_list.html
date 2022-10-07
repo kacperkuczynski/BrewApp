@@ -1,0 +1,79 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Lista wytworzonych produktów</title>
+    <!-- CSS only -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+</head>
+<body>
+<!--create navigation bar (header)-->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <!--                <span class="icon-bar"></span>-->
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">Browar Złota Woda</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/raws}">Surowce</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/recipes}">Receptury</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/product_list}">Wytworzone produkty</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/getGraph}">Dane produkcji</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br>
+<br>
+<br>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="center text-center">
+    <h2>Lista wytworzonych produktów</h2>
+    <hr/>
+<!--    <a th:href="@{/addRaw}" class="btn btn-primary mb-2">Dodaj surowiec</a>-->
+    <table class="table table-bordered table-striped" id="raw-Table">
+        <thead>
+        <tr >
+            <th style="width: auto; height: auto; text-align: center">Rodzaj receptury</th>
+            <th style="width: auto; height: auto; text-align: center">Data produkcji</th>
+            <th style="width: auto; height: auto; text-align: center">Wytworzono [Litry]</th>
+            <th style="width: auto; height: auto; text-align: center">Działanie</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product: ${product}">
+            <td th:text="${product.recipe.type}" style="width: auto; height: auto; text-align: center"></td>
+            <td th:text="${product.executed}" style="width: auto; height: auto; text-align: center"></td>
+            <td th:text="${product.made}" style="width: auto; height: auto; text-align: center"></td>
+            <td style="width: auto; height: auto; text-align: center">
+                <a th:href="@{/detailProduct/__${product.id}__/__${product.recipe.id}__}" class="btn btn-info">Popraw raport</a>
+                <a th:href="@{/deleteProduct/__${product.id}__}" class="btn btn-danger ml-2">Usuń raport</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.12.1/datatables.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $("#raw-Table").DataTable();
+  })
+</script>
+<hr/>
+<a th:href="@{/raws}" class="btn">Wróć do strony głównej</a>
+</body>
+</html>
