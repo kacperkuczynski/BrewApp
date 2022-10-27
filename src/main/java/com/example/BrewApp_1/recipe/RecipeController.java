@@ -1,6 +1,5 @@
 package com.example.BrewApp_1.recipe;
 
-import com.example.BrewApp_1.raw.RawRepository;
 import com.example.BrewApp_1.ingredient.IngredientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,7 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RecipeController {
     private final RecipeRepository recipeRepo;
-    private final RawRepository rawRepo;
     private final IngredientRepository ingrRepo;
 
     @GetMapping("/recipes")

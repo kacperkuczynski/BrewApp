@@ -15,10 +15,6 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
    @Query(value = "SELECT r FROM Recipe r WHERE r.id = ?1")
    Recipe findByRecipeId(Long recipeId);
 
-    @Query(value = "SELECT r.type FROM Recipe r JOIN r.product p group by r.type order by p.executed")
-    List<String> findRecipeType();
 
-    @Query(value = "SELECT r.recipeIngr FROM Recipe r WHERE r.id = ?1")
-    List<String> findRecipeIngr(Long RecipeId);
 
 }

@@ -15,7 +15,6 @@ import java.util.List;
 @RequestMapping
 public class RawController {
 
-    private final RawService rService;
     @Autowired
     private RawRepository rawRepository;
 
@@ -53,10 +52,4 @@ public class RawController {
         return "redirect:/raws";
     }
 
-//    @GetMapping({"/updateRaw"})
-//    public String showUpdateForm(@RequestParam Long maltId){
-//        Raw raw = rawRepository.findById(maltId).get();
-//        mo
-//        return "raw_add";
-//    }
 }

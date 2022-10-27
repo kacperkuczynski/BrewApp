@@ -1,20 +1,16 @@
 package com.example.BrewApp_1.ingredient;
 
-import com.example.BrewApp_1.product.Product;
 import com.example.BrewApp_1.raw.Raw;
-import com.example.BrewApp_1.raw.RawServiceImpl;
 import com.example.BrewApp_1.recipe.Recipe;
 import com.example.BrewApp_1.raw.RawRepository;
 import com.example.BrewApp_1.recipe.RecipeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -26,10 +22,6 @@ public class IngredientController {
     private RecipeRepository recipeRepo;
     @Autowired
     private final IngredientRepository ingrRepo;
-
-    @Autowired
-    private RawServiceImpl rawService;
-
 
     @GetMapping(value = "/addIngredient/{recipeId}")
     public String addIngredient(@PathVariable(value = "recipeId") Long id, Model model){
