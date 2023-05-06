@@ -6,5 +6,9 @@ The application is designed to create a system enabling technical support in a r
 
 #### Class Diagram
 ![class diagram](https://user-images.githubusercontent.com/59393105/236632508-dbefa4e6-cce6-4769-82b2-3c684b0da498.png)
+A class diagram contains information about the static relationships between classes that are closely related to each other.
+The diagram contains 4 key classes for the functioning of the project at the moment. The most important project class is the Recipe class. This class is the sole owner of the Recipe ingredient class. Only an instance of the Raw material object can become a recipe ingredient.
+The recipe is also fundamental to the Product class.
+
 #### Use Case Diagram
 ![use case diagram](https://user-images.githubusercontent.com/59393105/236632548-25032b92-f824-4f72-9daf-fe8f3eb7bc14.png)
