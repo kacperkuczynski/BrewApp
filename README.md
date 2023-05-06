@@ -17,8 +17,14 @@ The recipe is also fundamental to the Product class.
  
 
  1. Recipe Detail
+ 
 ![recipe detail](https://user-images.githubusercontent.com/59393105/236633492-94e4c9f8-ceba-49af-9744-ad7a2c28e0ae.png)
+
  2. Adding Ingredient
+ 
 ![adding ingredient](https://user-images.githubusercontent.com/59393105/236633498-397b17a3-0d03-44ca-8425-7caa0ef73039.png)
+
  3.  Chart Production
+ 
 ![chart production](https://user-images.githubusercontent.com/59393105/236633503-7aedd0bc-8233-46fe-8d34-92499391b074.png)
+
