@@ -11,6 +11,7 @@ A class diagram contains information about the static relationships between clas
 The diagram contains 4 key classes for the functionality of the project at the moment. The most important project class is the Recipe class. This class is the one specific owner of the Ingredient class. Only an instance of the Raw Material object can be a recipe ingredient.
 The recipe is also fundamental to the Product class.
 
+
 #### Use Case Diagram
 ![use case diagram](https://user-images.githubusercontent.com/59393105/236632548-25032b92-f824-4f72-9daf-fe8f3eb7bc14.png)
  ####  Below photos attached :point_down:
@@ -28,3 +29,11 @@ The recipe is also fundamental to the Product class.
  
 ![chart production](https://user-images.githubusercontent.com/59393105/236633503-7aedd0bc-8233-46fe-8d34-92499391b074.png)
 
+### Application development plan
+#### Technical :factory:
+1. implement REST architectural style 
+2. implement LIQUIBASE production environment
+#### Functional :construction_worker:
+1. create page which support step by step brewery men in production
+2. introduce module which will be monitoring raw material inventory and communicate if some inventory will be less than minimum
+3. introduce module which will be manage fermentation and inform about crucial time to change some condition in process
